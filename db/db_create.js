@@ -10,43 +10,26 @@ db.execute (drop_comment_table_sql);
 const set_foriegn_key_checks = `SET foreign_key_checks = 0`;
 db.execute (set_foriegn_key_checks);
 
-//Create the subject table
-const create_content_table_sql = `CREATE TABLE content (
-    contentId INT NOT NULL AUTO_INCREMENT,
-    description VARCHAR(100) NOT NULL,
-    PRIMARY KEY (contentId))
-    ENGINE = InnoDB;`;
-
-db.execute(create_content_table_sql)
-
 
 //Create the assignments table
-const create_comment_table_sql = `CREATE TABLE comment(
-    commentID INT NOT NULL AUTO_INCREMENT,
-    text VARCHAR(100) NOT NULL,
-    KEY (comment_contentID),
-    PRIMARY KEY (commentID),
-    comment_contentID VARCHAR (100) NOT NULL,
-    CONSTRAINT fk_contentComment
-      FOREIGN KEY (comment_contentID) 
-      REFERENCES content (contentID)
-      ON DELETE RESTRICT
-      ON UPDATE CASCADE)
-    ENGINE = InnoDB;`;
+const create_comment_table_sql = `CREATE TABLE web_apps_project_2324t2_TF_kayhwa.comment (
+  comment_id INT NOT NULL AUTO_INCREMENT,
+  comment_desc VARCHAR(45) NOT NULL,
+  PRIMARY KEY (comment_id);`
 db.execute(create_comment_table_sql)
 
-const create_reply_table_sql = `CREATE TABLE reply(
-    replyID INT NOT NULL AUTO_INCREMENT,
-    replies VARCHAR(100) NOT NULL,
-    PRIMARY KEY (replyID),
-    reply_commentID VARCHAR (100) NOT NULL,
-    KEY (reply_commentID),
-    CONSTRAINT commentReply
-      FOREIGN KEY (reply_commentID) 
-      REFERENCES comment (commentID)
-      ON DELETE RESTRICT
-      ON UPDATE CASCADE)
-    ENGINE = InnoDB;`;
+const create_reply_table_sql = `CREATE TABLE web_apps_project_2324t2_TF_kayhwa.reply (
+  reply_id INT NOT NULL AUTO_INCREMENT,
+  replies VARCHAR(45) NOT NULL,
+  reply_comment_id INT NOT NULL,
+  PRIMARY KEY (reply_id),
+  INDEX reply_comment_id_idx (reply_comment_id ASC),
+  CONSTRAINT reply_comment_id
+    FOREIGN KEY (reply_comment_id)
+    REFERENCES web_apps_project_2324t2_TF_kayhwa.comment (comment_id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);`
+
 db.execute(create_reply_table_sql)
 
 
